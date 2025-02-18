@@ -129,7 +129,7 @@ export default function Login() {
 				<div className="w-full h-fit mobile:hidden">
 					<Toolbar />
 				</div>
-				<div className="w-full h-[25px] mobile:hidden"></div>
+				{/* <div className="w-full h-[25px] mobile:hidden"></div> */}
 				<p className="md:hidden my-8 sticky top-0 left-0 z-10 font-bold">
 					Welcome back
 				</p>
