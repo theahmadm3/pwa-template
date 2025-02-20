@@ -1,0 +1,16 @@
+{
+	"name": "Shoppergetit",
+	"short_name": "Shoppergetit",
+	"description": "A Progressive Web App for shopping",
+	"start_url": "/",
+	"display": "standalone",
+	"background_color": "#ffffff",
+	"theme_color": "#B63B56",
+	"icons": [
+		{
+			"src": "/public/vercel.svg",
+			"sizes": "192x192",
+			"type": "svg"
+		}
+	]
+}
