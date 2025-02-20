@@ -93,12 +93,7 @@ export default function LoginForm() {
 				ref={manualSectionRef}
 				className="flex flex-col justify-center items-center gap-y-3 h-full"
 			>
-				<form
-					onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
-						e.preventDefault();
-					}}
-					className="flex flex-col gap-y-3"
-				>
+				<form className="flex flex-col gap-y-3">
 					<h1 className="mobile:hidden font-bold text-2xl">Log in</h1>
 					<input
 						type="email"

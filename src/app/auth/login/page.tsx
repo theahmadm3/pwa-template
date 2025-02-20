@@ -126,9 +126,9 @@ export default function Login() {
 				</Drawer>
 			</nav>
 			<main className="bg-[#f5f5f5] w-full h-[70vh] px-4 md:relative">
-				{/* <div className="w-full h-fit mobile:hidden">
+				<div className="w-full h-fit mobile:hidden">
 					<Toolbar />
-				</div> */}
+				</div>
 				{/* <div className="w-full h-[25px] mobile:hidden"></div> */}
 				<p className="md:hidden my-8 sticky top-0 left-0 z-10 font-bold">
 					Welcome back
