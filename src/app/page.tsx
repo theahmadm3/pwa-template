@@ -1,14 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
+import { register } from "@/lib/registerServiceWorker";
 
 const LoginForm = dynamic(() => import("./auth/login/page"), { ssr: false });
 
 export default function LandingPage() {
 	const [isLoading, setIsLoading] = useState(false);
 	const [showLogin, setShowLogin] = useState(false);
+
+	useEffect(() => {
+		register();
+	}, []);
 
 	const handleClick = () => {
 		setIsLoading(true);
