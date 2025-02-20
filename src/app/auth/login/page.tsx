@@ -17,6 +17,7 @@ import Image from "next/image";
 import profileIcon from "/public/assets/icons/profile-icon.svg";
 import bgImage from "/public/assets/images/auth-background.png";
 import LoginForm from "@/components/ui/login";
+import PWAInstallButton from "@/components/ui/PWAIntsallButton";
 
 const drawerWidth = 240;
 const navItems = ["Store", "login"];
@@ -65,7 +66,11 @@ export default function Login() {
 					>
 						<LocationOn />
 						<span>Abuja</span>
+						<PWAInstallButton />
+						<PWAInstallButton />
+						<PWAInstallButton />
 					</Box>
+					<PWAInstallButton />
 					<Box
 						className="md:w-1/2 justify-end flex-row pt-3"
 						sx={{ display: { xs: "none", sm: "flex" } }}
@@ -83,11 +88,13 @@ export default function Login() {
 								{item}
 							</button>
 						))}
+						<PWAInstallButton />
 						<button className="bg-[#B63B56] hover:opacity-70 border-none text-white rounded-xl mx-4 px-4 py-3">
 							Become a Shopper
 						</button>
 					</Box>
 					<Box sx={{ display: { sm: "none" } }}>
+						<PWAInstallButton />
 						<IconButton aria-label="open profile" edge="start" className="mx-2">
 							<Image
 								className="w-12 h-12"
