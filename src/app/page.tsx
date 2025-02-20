@@ -15,7 +15,7 @@ export default function LandingPage() {
 		setTimeout(() => {
 			setIsLoading(false);
 			setShowLogin(true);
-		}, 5000); // Simulate loading time
+		}, 3000); // Simulate loading time
 	};
 
 	return (

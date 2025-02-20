@@ -17,6 +17,7 @@ import Image from "next/image";
 import profileIcon from "/public/assets/icons/profile-icon.svg";
 import bgImage from "/public/assets/images/auth-background.png";
 import LoginForm from "@/components/ui/login";
+import NavBar from "./navv";
 
 const drawerWidth = 240;
 const navItems = ["Store", "login"];
@@ -95,6 +96,7 @@ export default function Login() {
 								src={profileIcon}
 							/>
 						</IconButton>
+						<NavBar />
 						<IconButton
 							aria-label="open drawer"
 							edge="start"

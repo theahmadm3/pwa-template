@@ -1,0 +1,20 @@
+{
+	"short_name": "Shoppergetit",
+	"name": "Shoppergetit - A shopping app",
+	"icons": [
+		{
+			"src": "/icon-192x192.png",
+
+			"type": "image/png"
+		},
+		{
+			"src": "/icon-512x512.png",
+
+			"type": "image/png"
+		}
+	],
+	"start_url": "/",
+	"display": "standalone",
+	"theme_color": "#B63B56",
+	"background_color": "#ffffff"
+}
