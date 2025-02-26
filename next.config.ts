@@ -1,9 +1,10 @@
 import nextPWA from "next-pwa";
 
 const withPWA = nextPWA({
-	dest: "public", // Output directory for service worker files
-	register: true, // Automatically register the service worker
-	skipWaiting: true, // Activate the service worker immediately
+	dest: "public",
+	register: true,
+	skipWaiting: true,
+	maximumFileSizeToCacheInBytes: 10 * 1024 * 1024,
 });
 
 const nextConfig = {
