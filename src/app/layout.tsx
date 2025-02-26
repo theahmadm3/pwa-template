@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { useState, useEffect } from "react";
+import "../styles/globals.css";
 
 interface BeforeInstallPromptEvent extends Event {
 	prompt: () => Promise<void>;
@@ -53,6 +54,11 @@ export default function RootLayout({
 		window.addEventListener("resize", checkMobile);
 		checkMobile();
 
+		// Alert user if install prompt is not available
+		if (!deferredPrompt) {
+			alert("Install prompt is not available");
+		}
+
 		return () => {
 			window.removeEventListener(
 				"beforeinstallprompt",
@@ -64,11 +70,12 @@ export default function RootLayout({
 			window.removeEventListener("pageshow", checkStandalone);
 			window.removeEventListener("resize", checkMobile);
 		};
-	}, []);
+	}, [deferredPrompt]);
 
 	const installPWA = () => {
 		if (!deferredPrompt) {
 			console.log("Installation prompt not available");
+			alert("Installation prompt not available");
 			return;
 		}
 		(deferredPrompt as BeforeInstallPromptEvent).prompt();
