@@ -21,5 +21,6 @@
 	"lang": "en-GB",
 	"name": "shoppergetit",
 	"short_name": "shoppergetit",
-	"description": "Shopper getit app"
+	"description": "Shopper getit app",
+	"start_url": "/"
 }
