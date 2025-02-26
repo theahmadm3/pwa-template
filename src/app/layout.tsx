@@ -54,11 +54,6 @@ export default function RootLayout({
 		window.addEventListener("resize", checkMobile);
 		checkMobile();
 
-		// Alert user if install prompt is not available
-		if (!deferredPrompt) {
-			alert("Install prompt is not available");
-		}
-
 		return () => {
 			window.removeEventListener(
 				"beforeinstallprompt",
