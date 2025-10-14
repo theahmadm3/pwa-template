@@ -7,6 +7,8 @@
 **Date:** Wed Feb 26 22:30:24 2025 +0100  
 **Commit Message:** Merge pull request #8 from theahmadm3/pwa-integration - removing prompt
 
+*Note: The commit date reflects the actual timestamp from the git history.*
+
 ## Summary
 
 This commit represents the initial setup of a Progressive Web Application (PWA) template built with Next.js 15, React 19, TypeScript, and Tailwind CSS. It establishes the complete foundation for a modern, installable web application with a focus on authentication UI and PWA capabilities.
@@ -24,7 +26,7 @@ This is a foundational commit that creates the entire project structure from scr
 
 ### 1. Configuration Files
 
-#### `package.json` (34 lines added)
+#### `package.json` (34 lines)
 **Purpose:** Defines project dependencies and scripts
 
 **Key Dependencies:**
@@ -32,7 +34,7 @@ This is a foundational commit that creates the entire project structure from scr
 - **UI Libraries:** 
   - Material-UI (@mui/material: ^6.4.4, @mui/icons-material: ^6.4.4)
   - Emotion for CSS-in-JS (@emotion/react, @emotion/styled)
-- **Animation:** motion ^12.4.3 (Framer Motion)
+- **Animation:** motion ^12.4.3 (formerly Framer Motion, rebranded as "Motion" from v12)
 - **PWA Support:** next-pwa ^5.6.0
 - **Styling:** Tailwind CSS ^3.4.1
 - **Language:** TypeScript ^5
@@ -162,7 +164,7 @@ This is a foundational commit that creates the entire project structure from scr
    - 3-second loading animation
    - Transitions to login screen
 
-3. **Animations (Framer Motion):**
+3. **Animations (Motion/Framer Motion):**
    - Button hover/tap effects (scale transformations)
    - Fade transitions between states
    - Loading spinner with scale animation
@@ -320,7 +322,8 @@ This is a foundational commit that creates the entire project structure from scr
    - Conditional rendering based on screen size
 
 3. **Animations:**
-   - Framer Motion for smooth transitions
+   - Motion library (Framer Motion v12+) for smooth transitions
+   - Code imports from "framer-motion" (package name: "motion" v12.4.3)
    - Loading states
    - Interactive button feedback
 
@@ -363,7 +366,7 @@ This is a foundational commit that creates the entire project structure from scr
 | @mui/icons-material | 6.4.4 | Material icons |
 | @emotion/react | 11.14.0 | CSS-in-JS (MUI dependency) |
 | @emotion/styled | 11.14.0 | Styled components (MUI dependency) |
-| motion | 12.4.3 | Animation library |
+| motion | 12.4.3 | Animation library (Framer Motion v12+) |
 | next-pwa | 5.6.0 | PWA support |
 
 ### Development Dependencies (9 packages)
