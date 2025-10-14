@@ -1,0 +1,251 @@
+PWA Implementation Documentation
+=================================
+
+This document contains all lines of code that relate to achieving Progressive Web App (PWA) functionality in this Next.js application.
+
+=================================
+1. PACKAGE.JSON - PWA Dependencies
+=================================
+
+File: package.json
+Lines: 18, 24
+
+  "dependencies": {
+    "next-pwa": "^5.6.0",
+  },
+  "devDependencies": {
+    "@types/next-pwa": "^5.6.9",
+  }
+
+Description: Added next-pwa package for PWA support and its TypeScript type definitions.
+
+=================================
+2. NEXT.CONFIG.TS - PWA Configuration
+=================================
+
+File: next.config.ts
+Lines: 1-14 (entire file)
+
+import nextPWA from "next-pwa";
+
+const withPWA = nextPWA({
+	dest: "public",
+	register: true,
+	skipWaiting: true,
+	maximumFileSizeToCacheInBytes: 10 * 1024 * 1024,
+});
+
+const nextConfig = {
+	// Your existing Next.js configuration here, if any
+};
+
+export default withPWA(nextConfig);
+
+Description: Configures next-pwa with the following settings:
+- dest: "public" - Service worker files will be generated in the public folder
+- register: true - Automatically registers the service worker
+- skipWaiting: true - Service worker will activate immediately
+- maximumFileSizeToCacheInBytes: 10MB - Sets cache size limit
+
+=================================
+3. SRC/TYPES/NEXT-PWA.D.TS - Type Definitions
+=================================
+
+File: src/types/next-pwa.d.ts
+Lines: 1-5 (entire file)
+
+declare module "next-pwa" {
+	import { NextConfig } from "next";
+	function withPWA(config: NextConfig): (nextConfig: NextConfig) => NextConfig;
+	export default withPWA;
+}
+
+Description: TypeScript type definitions for the next-pwa module.
+
+=================================
+4. SRC/APP/LAYOUT.TSX - PWA Install Functionality
+=================================
+
+File: src/app/layout.tsx
+
+Lines: 2 (client directive)
+"use client";
+
+Lines: 3 (React imports for PWA state management)
+import { useState, useEffect } from "react";
+
+Lines: 6-12 (BeforeInstallPrompt event interface)
+interface BeforeInstallPromptEvent extends Event {
+	prompt: () => Promise<void>;
+	userChoice: Promise<{
+		outcome: "accepted" | "dismissed";
+		platform: string;
+	}>;
+}
+
+Lines: 19-21 (PWA state management)
+	const [deferredPrompt, setDeferredPrompt] = useState<Event | null>(null);
+	const [isAppInstalled, setAppInstalled] = useState(false);
+	const [isMobile, setMobile] = useState(false);
+
+Lines: 23-68 (PWA event handlers and lifecycle management)
+	useEffect(() => {
+		const handleBeforeInstallPrompt = (e: BeforeInstallPromptEvent) => {
+			e.preventDefault();
+			setDeferredPrompt(e);
+		};
+
+		const handleAppInstalled = () => {
+			setAppInstalled(true);
+		};
+
+		const checkStandalone = () => {
+			if (
+				window.matchMedia &&
+				window.matchMedia("(display-mode: standalone)").matches
+			) {
+				setAppInstalled(true);
+			}
+		};
+
+		const checkMobile = () => {
+			setMobile(window.matchMedia("(max-width: 768px)").matches);
+		};
+
+		window.addEventListener(
+			"beforeinstallprompt",
+			handleBeforeInstallPrompt as any,
+		);
+		window.addEventListener("appinstalled", handleAppInstalled);
+		window.addEventListener("DOMContentLoaded", checkStandalone);
+		window.addEventListener("load", checkStandalone);
+		window.addEventListener("pageshow", checkStandalone);
+		window.addEventListener("resize", checkMobile);
+		checkMobile();
+
+		return () => {
+			window.removeEventListener(
+				"beforeinstallprompt",
+				handleBeforeInstallPrompt as any,
+			);
+			window.removeEventListener("appinstalled", handleAppInstalled);
+			window.removeEventListener("DOMContentLoaded", checkStandalone);
+			window.removeEventListener("load", checkStandalone);
+			window.removeEventListener("pageshow", checkStandalone);
+			window.removeEventListener("resize", checkMobile);
+		};
+	}, [deferredPrompt]);
+
+Lines: 70-88 (PWA install function)
+	const installPWA = () => {
+		if (!deferredPrompt) {
+			console.log("Installation prompt not available");
+			alert("Installation prompt not available");
+			return;
+		}
+		(deferredPrompt as BeforeInstallPromptEvent).prompt();
+		(deferredPrompt as BeforeInstallPromptEvent).userChoice.then(
+			(choiceResult) => {
+				if (choiceResult.outcome === "accepted") {
+					console.log("User accepted the install prompt");
+					setAppInstalled(true);
+				} else {
+					console.log("User dismissed the install prompt");
+				}
+				setDeferredPrompt(null);
+			},
+		);
+	};
+
+Lines: 93-96 (PWA metadata in HTML head)
+				<link rel="manifest" href="/manifest.json" />
+				<meta name="apple-mobile-web-app-capable" content="yes" />
+				<link rel="apple-touch-icon" href="/icons/apple-icon-180.png" />
+				<meta name="theme-color" content="#3c7fec" />
+
+Lines: 100-102 (Install button UI)
+				{isMobile && deferredPrompt && !isAppInstalled && (
+					<button onClick={installPWA}>Install App</button>
+				)}
+
+Description: Complete PWA installation logic including:
+- BeforeInstallPromptEvent interface for TypeScript support
+- State management for deferred prompt, install status, and mobile detection
+- Event listeners for beforeinstallprompt, appinstalled, and standalone mode detection
+- Install function to trigger PWA installation
+- HTML meta tags for manifest, theme color, and Apple-specific PWA support
+- Conditional install button for mobile users
+
+=================================
+5. PUBLIC/MANIFEST.JSON - PWA Manifest
+=================================
+
+File: public/manifest.json
+Lines: 1-26 (entire file)
+
+{
+	"theme_color": "#3c7fec",
+	"background_color": "#2EC6FE",
+	"icons": [
+		{
+			"purpose": "maskable",
+			"sizes": "512x512",
+			"src": "icon512_maskable.png",
+			"type": "image/png"
+		},
+		{
+			"purpose": "any",
+			"sizes": "512x512",
+			"src": "icon512_rounded.png",
+			"type": "image/png"
+		}
+	],
+	"orientation": "any",
+	"display": "standalone",
+	"dir": "auto",
+	"lang": "en-GB",
+	"name": "shoppergetit",
+	"short_name": "shoppergetit",
+	"description": "Shopper getit app",
+	"start_url": "/"
+}
+
+Description: PWA manifest file that defines:
+- App name, short name, and description
+- Theme and background colors
+- App icons (maskable and standard)
+- Display mode (standalone)
+- Start URL and orientation
+- Language and text direction
+
+=================================
+6. PUBLIC ASSETS - PWA Icons
+=================================
+
+Files:
+- public/icon512_maskable.png (maskable icon for adaptive display)
+- public/icon512_rounded.png (standard app icon)
+- public/sw.js (service worker - auto-generated by next-pwa)
+- public/workbox-4754cb34.js (Workbox library - auto-generated by next-pwa)
+
+Description: PWA icon assets and auto-generated service worker files.
+
+=================================
+SUMMARY
+=================================
+
+The PWA implementation consists of:
+
+1. **Dependencies**: next-pwa package and type definitions in package.json
+2. **Build Configuration**: next.config.ts configures PWA generation with next-pwa
+3. **Type Definitions**: src/types/next-pwa.d.ts for TypeScript support
+4. **Runtime Logic**: src/app/layout.tsx handles install prompts and PWA state
+5. **Manifest**: public/manifest.json defines PWA metadata and appearance
+6. **Assets**: Icon files and auto-generated service worker files
+
+This setup enables the app to:
+- Be installable on mobile and desktop devices
+- Work offline (via service worker caching)
+- Display as a standalone app when installed
+- Show custom install prompts on supported browsers
+- Provide native app-like experience with icons and splash screens
